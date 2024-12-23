@@ -1,0 +1,123 @@
+<div {{ attributes }}>
+    <div class="bg-red-600 text-white py-8">
+        <div class="container mx-auto max-w-4xl">
+            <h1 class="text-center text-xl font-bold mb-6">Porównywarka pożyczek i kredytów</h1>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="w-full md:w-1/2 px-2">
+                        <label for="loanAmount" class="block text-sm font-medium text-gray-700">Pożyczam</label>
+                        <div class="flex items-center border rounded-lg overflow-hidden">
+                            <button type="button" class="px-4 py-2 bg-white text-gray-900 hover:bg-gray-200" {{ live_action('decrementLoanAmount') }}>-</button>
+                            <input
+                                    id="loanAmount"
+                                    type="text"
+                                    class="flex-1 text-center text-gray-900 border-none outline-none"
+                                    data-model="norender|loanAmount"
+                            />
+                            <button type="button" class="px-4 py-2 bg-white text-gray-900 hover:bg-gray-200" {{ live_action('incrementLoanAmount') }}>+</button>
+                        </div>
+
+                        <p class="text-xs text-gray-500 mt-1">od 500 do 250000 zł</p>
+                    </div>
+                    <div class="w-full md:w-1/2 px-2 mt-4 md:mt-0">
+                        <label for="loanTerm" class="block text-sm font-medium text-gray-700">Na okres</label>
+                        <div class="flex items-center border rounded-lg overflow-hidden">
+                            <button type="button" class="px-4 py-2 bg-white text-gray-900 hover:bg-gray-200" {{ live_action('decrementLoanTerm') }}>-</button>
+                            <input
+                                    id="loanTerm"
+                                    type="text"
+                                    class="flex-1 text-center text-gray-900 border-none outline-none"
+                                    data-model="norender|loanTerm"
+                            />
+                            <button type="button" class="px-4 py-2 bg-white text-gray-900 hover:bg-gray-200" {{ live_action('incrementLoanTerm') }}>+</button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">od 3 do 120 mies.</p>
+                    </div>
+                </div>
+                <div class="mt-6 text-center">
+                    <button
+                            type="button"
+                            class="px-6 py-3 bg-red-500 hover:bg-red-700 text-white font-bold rounded-lg"
+                            data-action="live#$render"
+                    >
+                        Oblicz
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sorting buttons -->
+    <div class="container mx-auto max-w-4xl mt-4">
+        <div class="flex items-center justify-between">
+            <div>
+                <!-- using input and data-model -->
+                <label for="sortByInterestRate" class="px-4 py-2 bg-gray-100 hover:bg-gray-200">
+                    Po oprocentowaniu
+                </label>
+                <input
+                        type="radio"
+                        class="hidden"
+                        id="sortByInterestRate"
+                        data-model="sortBy"
+                        value="interestRate"
+                />
+                <label for="sortById" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 ml-2">
+                    Po ID
+                </label>
+                <input
+                        type="radio"
+                        class="hidden"
+                        id="sortById"
+                        data-model="sortBy"
+                        value="id"
+                />
+        </div>
+    </div>
+
+    <div class="container mx-auto max-w-4xl mt-8" data-loading="addClass(opacity-50)">
+        {% for offer in this.offers %}
+            <div class="bg-white rounded-lg shadow-lg p-4 mt-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+{#                        <img src="/path/to/logo.png" alt="Comperia Raty" class="w-12 h-12">#}
+                        <div>
+                            <h2 class="font-bold text-lg">{{ offer.name }}</h2>
+                            <p class="text-sm text-gray-500">Kwota: od {{ offer.minAmount }} do {{ offer.maxAmount }} zł</p>
+                        </div>
+                    </div>
+                    <button
+                            class="px-4 py-2 bg-red-500 text-white font-bold rounded-lg hover:bg-red-700"
+                    >
+                        Sprawdź
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4 text-center">
+                    <div>
+                        <p class="text-sm text-gray-500">Kwota do spłaty</p>
+                        <p class="font-bold text-lg">{{ offer.totalCost|round(2) }} zł</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Miesięczna rata</p>
+                        <p class="font-bold text-lg">{{ offer.monthlyRate|round(2) }} zł</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">RRSO</p>
+                        <p class="font-bold text-lg">{{ offer.rrso }}%</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Oprocentowanie</p>
+                        <p class="font-bold text-lg">{{ offer.interestRate }}%</p>
+                    </div>
+                </div>
+{#                <div class="flex items-center justify-between mt-4">#}
+{#                    <p class="text-sm text-gray-500">1629 osób wybrało ofertę</p>#}
+{#                    <div class="flex items-center space-x-2">#}
+{#                        <span class="text-sm text-yellow-500">★★★★☆</span>#}
+{#                        <span class="text-sm text-gray-500">4,2/5</span>#}
+{#                    </div>#}
+{#                </div>#}
+            </div>
+        {% endfor %}
+    </div>
+</div>
