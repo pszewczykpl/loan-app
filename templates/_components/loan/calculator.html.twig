@@ -1,123 +1,144 @@
 <div {{ attributes }}>
-    <div class="bg-red-600 text-white py-8">
-        <div class="container mx-auto max-w-4xl">
-            <h1 class="text-center text-xl font-bold mb-6">Porównywarka pożyczek i kredytów</h1>
+    <div class="container mx-auto max-w-4xl mt-[-3.5rem] relative">
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <div class="flex flex-col md:flex-row items-center justify-between">
                     <div class="w-full md:w-1/2 px-2">
                         <label for="loanAmount" class="block text-sm font-medium text-gray-700">Pożyczam</label>
                         <div class="flex items-center border rounded-lg overflow-hidden">
                             <button type="button" class="px-4 py-2 bg-white text-gray-900 hover:bg-gray-200" {{ live_action('decrementLoanAmount') }}>-</button>
-                            <input
-                                    id="loanAmount"
-                                    type="text"
-                                    class="flex-1 text-center text-gray-900 border-none outline-none"
-                                    data-model="norender|loanAmount"
-                            />
+                            <input id="loanAmount" type="text" class="flex-1 text-center text-gray-900 border-none outline-none" data-model="norender|loanAmount"/>
                             <button type="button" class="px-4 py-2 bg-white text-gray-900 hover:bg-gray-200" {{ live_action('incrementLoanAmount') }}>+</button>
                         </div>
-
                         <p class="text-xs text-gray-500 mt-1">od 500 do 250000 zł</p>
                     </div>
                     <div class="w-full md:w-1/2 px-2 mt-4 md:mt-0">
                         <label for="loanTerm" class="block text-sm font-medium text-gray-700">Na okres</label>
                         <div class="flex items-center border rounded-lg overflow-hidden">
                             <button type="button" class="px-4 py-2 bg-white text-gray-900 hover:bg-gray-200" {{ live_action('decrementLoanTerm') }}>-</button>
-                            <input
-                                    id="loanTerm"
-                                    type="text"
-                                    class="flex-1 text-center text-gray-900 border-none outline-none"
-                                    data-model="norender|loanTerm"
-                            />
+                            <input id="loanTerm" type="text" class="flex-1 text-center text-gray-900 border-none outline-none" data-model="norender|loanTerm"/>
                             <button type="button" class="px-4 py-2 bg-white text-gray-900 hover:bg-gray-200" {{ live_action('incrementLoanTerm') }}>+</button>
                         </div>
                         <p class="text-xs text-gray-500 mt-1">od 3 do 120 mies.</p>
                     </div>
                 </div>
                 <div class="mt-6 text-center">
-                    <button
-                            type="button"
-                            class="px-6 py-3 bg-red-500 hover:bg-red-700 text-white font-bold rounded-lg"
-                            data-action="live#$render"
-                    >
-                        Oblicz
-                    </button>
+                    <button type="button" class="px-6 py-3 bg-red-500 hover:bg-red-700 text-white font-bold rounded-lg" data-action="live#$render">Oblicz</button>
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- Sorting buttons -->
     <div class="container mx-auto max-w-4xl mt-4">
         <div class="flex items-center justify-between">
             <div>
-                <!-- using input and data-model -->
-                <label for="sortByInterestRate" class="px-4 py-2 bg-gray-100 hover:bg-gray-200">
-                    Po oprocentowaniu
-                </label>
-                <input
-                        type="radio"
-                        class="hidden"
-                        id="sortByInterestRate"
-                        data-model="sortBy"
-                        value="interestRate"
-                />
-                <label for="sortById" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 ml-2">
-                    Po ID
-                </label>
-                <input
-                        type="radio"
-                        class="hidden"
-                        id="sortById"
-                        data-model="sortBy"
-                        value="id"
-                />
+                <label for="sortByInterestRate" class="px-4 py-2 bg-gray-100 hover:bg-gray-200">Po oprocentowaniu</label>
+                <input type="radio" class="hidden" id="sortByInterestRate" data-model="sortBy" value="interestRate" />
+                <label for="sortById" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 ml-2">Po ID</label>
+                <input type="radio" class="hidden" id="sortById" data-model="sortBy" value="id" />
+            </div>
         </div>
     </div>
 
     <div class="container mx-auto max-w-4xl mt-8" data-loading="addClass(opacity-50)">
+        {% set id = 0 %}
         {% for offer in this.offers %}
-            <div class="bg-white rounded-lg shadow-lg p-4 mt-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-4">
-{#                        <img src="/path/to/logo.png" alt="Comperia Raty" class="w-12 h-12">#}
+            <div class="max-w-4xl mx-auto my-8 bg-white rounded-lg shadow border border-gray-200">
+                <!-- Górny nagłówek -->
+                <div class="bg-red-600 text-white px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div class="flex items-center space-x-3">
+                        <img src="https://via.placeholder.com/40x40?text=Logo" alt="Logo ComperiaRaty" class="w-10 h-10 rounded">
+                        <h2 class="font-bold text-lg">{{ offer.name }}</h2>
+                    </div>
+                    <div class="mt-2 md:mt-0 flex items-center space-x-4">
+{#                        <div class="text-sm">#}
+{#                            Opinie:#}
+{#                            <span class="font-semibold">4,2/5</span>#}
+{#                        </div>#}
+                        <button class="bg-white text-red-600 px-3 py-1 rounded font-semibold hover:bg-gray-100 transition">
+                            Skorzystaj z oferty
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sekcja główna z danymi o kredycie -->
+                <div class="p-4">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm">
                         <div>
-                            <h2 class="font-bold text-lg">{{ offer.name }}</h2>
-                            <p class="text-sm text-gray-500">Kwota: od {{ offer.minAmount }} do {{ offer.maxAmount }} zł</p>
+                            <p class="text-gray-600 uppercase text-xs">Kwota</p>
+                            <p class="font-semibold">{{ offer.minAmount }} - {{ offer.maxAmount }} zł</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 uppercase text-xs">Okres spłaty</p>
+                            <p class="font-semibold">10 - 84 mies.</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 uppercase text-xs">RRSO</p>
+                            <p class="font-semibold">{{ offer.rrso }}%</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 uppercase text-xs">Przyznawalność</p>
+                            <p class="font-semibold">
+                                89%
+                                <span class="ml-1 text-green-600 text-xs font-medium">(Wysoka)</span>
+                            </p>
                         </div>
                     </div>
-                    <button
-                            class="px-4 py-2 bg-red-500 text-white font-bold rounded-lg hover:bg-red-700"
-                    >
-                        Sprawdź
-                    </button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4 text-center">
+
+                <!-- Pasek z dodatkowymi opcjami (linki/zakładki) -->
+                <div class="bg-gray-50 px-4 py-2 flex flex-wrap items-center space-x-3 text-sm border-b border-gray-200">
+                    <button class="text-white-600 bg-gray-100 px-3 py-1 rounded font-semibold hover:bg-gray-200 transition">Dodaj do porównania</button>
+                    <button class="text-white-600 bg-gray-100 px-3 py-1 rounded font-semibold hover:bg-gray-200 transition" id="open_details_{{ id }}">Szczegóły kredytu</button>
+                </div>
+
+                <!-- Dodatkowe szczegóły kredytu (możesz rozbudować o kolejne wiersze) -->
+                <div class="px-4 py-2 text-sm grid grid-cols-1 md:grid-cols-2 gap-4 hidden" id="details_{{ id }}">
                     <div>
-                        <p class="text-sm text-gray-500">Kwota do spłaty</p>
-                        <p class="font-bold text-lg">{{ offer.totalCost|round(2) }} zł</p>
+                        <div class="flex justify-between py-2 border-b border-gray-200">
+                            <span>Metoda wypłaty:</span>
+                            <span class="font-semibold">przelew na konto</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-gray-200">
+                            <span>Wiek pożyczkobiorcy:</span>
+                            <span class="font-semibold">18 - 80 lat</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span>Konto osobiste:</span>
+                            <span class="font-semibold">Tak</span>
+                        </div>
                     </div>
                     <div>
-                        <p class="text-sm text-gray-500">Miesięczna rata</p>
-                        <p class="font-bold text-lg">{{ offer.monthlyRate|round(2) }} zł</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">RRSO</p>
-                        <p class="font-bold text-lg">{{ offer.rrso }}%</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Oprocentowanie</p>
-                        <p class="font-bold text-lg">{{ offer.interestRate }}%</p>
+                        <div class="flex justify-between py-2 border-b border-gray-200">
+                            <span>Oprocentowanie:</span>
+                            <span class="font-semibold">{{ offer.interestRate }}%</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-gray-200">
+                            <span>Czas wypłaty:</span>
+                            <span class="font-semibold">15 minut</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span>Nasza ocena:</span>
+                            <span class="font-semibold">4,50</span>
+                        </div>
                     </div>
                 </div>
-{#                <div class="flex items-center justify-between mt-4">#}
-{#                    <p class="text-sm text-gray-500">1629 osób wybrało ofertę</p>#}
-{#                    <div class="flex items-center space-x-2">#}
-{#                        <span class="text-sm text-yellow-500">★★★★☆</span>#}
-{#                        <span class="text-sm text-gray-500">4,2/5</span>#}
+
+                <!-- Ocena i przycisk na dole -->
+{#                <div class="bg-gray-50 px-4 py-2 flex items-center justify-between">#}
+{#                    <div class="text-sm font-semibold flex items-center space-x-1">#}
+{#                        <span class="text-yellow-400">&#9733;</span>#}
+{#                        <span class="text-yellow-400">&#9733;</span>#}
+{#                        <span class="text-yellow-400">&#9733;</span>#}
+{#                        <span class="text-yellow-400">&#9733;</span>#}
+{#                        <span class="text-gray-300">&#9733;</span>#}
+{#                        <span class="ml-2">(4/5)</span>#}
 {#                    </div>#}
+{#                    <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold transition">#}
+{#                        Skorzystaj z oferty#}
+{#                    </button>#}
 {#                </div>#}
             </div>
+            {% set id = id + 1 %}
         {% endfor %}
     </div>
 </div>

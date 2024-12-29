@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Loan\UI\Controller;
 
 use App\Loan\Model\ProviderRepositoryInterface;

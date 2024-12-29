@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Loan\UI\Twig\Component;
 
 use App\Loan\Application\DTO\CalculationDTO;

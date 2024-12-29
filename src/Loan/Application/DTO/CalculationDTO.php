@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Loan\Application\DTO;
 
 class CalculationDTO
@@ -19,7 +21,7 @@ class CalculationDTO
         float $interestRate,
         float $monthlyRate,
         float $rrso,
-        float $totalCost
+        float $totalCost,
     ) {
         $this->name = $name;
         $this->minAmount = $minAmount;

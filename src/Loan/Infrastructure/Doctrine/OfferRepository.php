@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Loan\Infrastructure\Doctrine;
 
 use App\Loan\Model\Offer;

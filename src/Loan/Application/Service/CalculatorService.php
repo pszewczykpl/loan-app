@@ -13,7 +13,7 @@ use function array_map;
 readonly class CalculatorService
 {
     public function __construct(
-        private OfferRepositoryInterface $repository
+        private OfferRepositoryInterface $repository,
     ) {
     }
 
